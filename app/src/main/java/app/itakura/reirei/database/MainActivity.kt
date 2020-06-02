@@ -1,15 +1,20 @@
 package app.itakura.reirei.database
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.MapView
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
-     val realm = Realm.getDefaultInstance()
+
+
+
+
+    val realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

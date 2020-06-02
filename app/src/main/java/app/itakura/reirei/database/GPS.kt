@@ -25,7 +25,7 @@ class GPS : AppCompatActivity(), LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_g_p_s)
 
 
         if (ContextCompat.checkSelfPermission(this,
