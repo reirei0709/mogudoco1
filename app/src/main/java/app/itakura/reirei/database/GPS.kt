@@ -15,6 +15,7 @@ import android.widget.Toast
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import app.itakura.reirei.database.R.layout.activity_g_p_s
 import kotlinx.android.synthetic.main.activity_g_p_s.*
 
 
@@ -25,7 +26,7 @@ class GPS : AppCompatActivity(), LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_g_p_s)
+        setContentView(R.layout.activity_maps)
 
 
         if (ContextCompat.checkSelfPermission(this,
@@ -45,8 +46,8 @@ class GPS : AppCompatActivity(), LocationListener {
             }
 
             saveButton.setOnClickListener {
-                val MainPage = Intent(this, MainActivity::class.java)
-                startActivity(MainPage)
+                val mainPage = Intent(this, MainActivity::class.java)
+                startActivity(mainPage)
             }
 
         }
