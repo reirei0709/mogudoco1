@@ -23,23 +23,17 @@
         android:textColor="#f44"
         android:textSize="20sp" />
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/button"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:text="＋" />
+        android:text="+" />
 
     <com.google.android.maps.MapView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:apiKey="API キーはここ"
-        android:clickable="true"
-        android:enabled="true" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:apiKey="AIzaSyCJv2rmwATm7TBOUmyrZ7bdAw01D53Vd8A"
+        />
 
 
 </LinearLayout>

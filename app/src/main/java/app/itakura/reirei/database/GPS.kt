@@ -1,21 +1,19 @@
 package app.itakura.reirei.database
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.Manifest
-import android.location.LocationManager
-import android.content.pm.PackageManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
-import android.widget.TextView
-import android.location.LocationProvider
+import android.location.LocationManager
+import android.os.Bundle
 import android.provider.Settings
-import android.widget.Toast
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import app.itakura.reirei.database.R.layout.activity_g_p_s
 import kotlinx.android.synthetic.main.activity_g_p_s.*
 
 
@@ -26,7 +24,7 @@ class GPS : AppCompatActivity(), LocationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_g_p_s)
 
 
         if (ContextCompat.checkSelfPermission(this,
@@ -45,7 +43,7 @@ class GPS : AppCompatActivity(), LocationListener {
                     this)
             }
 
-            saveButton.setOnClickListener {
+            button.setOnClickListener {
                 val mainPage = Intent(this, MainActivity::class.java)
                 startActivity(mainPage)
             }

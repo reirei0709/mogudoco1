@@ -2,6 +2,7 @@ package app.itakura.reirei.database
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import app.itakura.reirei.databaserealm.Memo
 import com.google.android.gms.maps.MapView
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
