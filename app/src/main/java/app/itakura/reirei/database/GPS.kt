@@ -14,18 +14,28 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_g_p_s.*
 
 
-class GPS : AppCompatActivity(), LocationListener {
+class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     // lateinit: late initialize to avoid checking null
     private lateinit var locationManager: LocationManager
+
+    private var map: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_p_s)
 
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -49,6 +59,15 @@ class GPS : AppCompatActivity(), LocationListener {
             }
 
         }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap
+
+        val tokyo = LatLng(35.689521,139.691704)
+        map?.addMarker(MarkerOptions().position(tokyo).title("東京"))
+        map?.moveCamera(CameraUpdateFactory.newLatLng(tokyo))
+
     }
 
     private fun locationStart() {
