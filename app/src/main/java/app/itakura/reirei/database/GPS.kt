@@ -18,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_g_p_s.*
@@ -66,8 +67,12 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
         val tokyo = LatLng(35.689521,139.691704)
         map?.addMarker(MarkerOptions().position(tokyo).title("東京"))
-        map?.moveCamera(CameraUpdateFactory.newLatLng(tokyo))
 
+        val cameraPosition = CameraPosition.Builder()
+            .zoom(12f)
+            .target(tokyo)
+            .build()
+        map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     private fun locationStart() {
