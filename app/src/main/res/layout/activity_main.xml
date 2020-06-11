@@ -7,53 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="#80FFFFFF"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="34dp" />
+
     <EditText
         android:id="@+id/titleEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
-        android:layout_marginBottom="192dp"
         android:ems="10"
-        android:hint="お店の名前"
+        android:hint="name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/keidoeditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="360dp" />
 
     <EditText
-        android:id="@+id/idoeditText"
+        android:id="@+id/detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="330dp"
         android:ems="10"
-        android:inputType="number"
-        android:text="緯度"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:hint="detail"
+        android:inputType="textMultiLine|textPersonName"
+        android:lines="4"
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="436dp" />
 
     <EditText
         android:id="@+id/keidoeditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="number"
         android:text="経度"
-        app:layout_constraintStart_toStartOf="@+id/idoeditText"
-        app:layout_constraintTop_toBottomOf="@+id/idoeditText" />
+        tools:layout_editor_absoluteX="89dp"
+        tools:layout_editor_absoluteY="620dp" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:text="登録"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/keidoeditText" />
-
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="667dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

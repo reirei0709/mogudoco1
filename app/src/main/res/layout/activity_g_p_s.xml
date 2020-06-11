@@ -7,22 +7,6 @@
     android:padding="20dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text_view1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textColor="#44f"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/text_view2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textColor="#f44"
-        android:textSize="20sp" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="160dp"

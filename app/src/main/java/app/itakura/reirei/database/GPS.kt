@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_g_p_s.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
@@ -38,11 +39,16 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1000)
+                1000
+            )
         } else {
             locationStart()
 
@@ -51,7 +57,8 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
                     LocationManager.GPS_PROVIDER,
                     1000,
                     50f,
-                    this)
+                    this
+                )
             }
 
             button.setOnClickListener {
@@ -65,7 +72,7 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap
 
-        val tokyo = LatLng(35.689521,139.691704)
+        val tokyo = LatLng(35.689521, 139.691704)
         map?.addMarker(MarkerOptions().position(tokyo).title("東京"))
 
         val cameraPosition = CameraPosition.Builder()
@@ -92,10 +99,15 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
             Log.d("debug", "not gpsEnable, startActivity")
         }
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1000)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1000
+            )
 
             Log.d("debug", "checkSelfPermission false")
             return
@@ -120,7 +132,8 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
      * which is either PERMISSION_GRANTED or PERMISSION_DENIED. Never null.
      */
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
         if (requestCode == 1000) {
             // 使用が許可された
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -130,8 +143,10 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
             } else {
                 // それでも拒否された時の対応
-                val toast = Toast.makeText(this,
-                    "これ以上なにもできません", Toast.LENGTH_SHORT)
+                val toast = Toast.makeText(
+                    this,
+                    "これ以上なにもできません", Toast.LENGTH_SHORT
+                )
                 toast.show()
             }
         }
@@ -150,23 +165,37 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
          */
     }
 
+    override fun onProviderEnabled(provider: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        TODO("Not yet implemented")
+    }
+
     override fun onLocationChanged(location: Location) {
-        // Latitude
-        val textView1 = findViewById<TextView>(R.id.text_view1)
-        val str1 = "Latitude:" + location.getLatitude()
-        textView1.text = str1
 
-        // Longitude
-        val textView2 = findViewById<TextView>(R.id.text_view2)
-        val str2 = "Longtude:" + location.getLongitude()
-        textView2.text = str2
-    }
 
-    override fun onProviderEnabled(provider: String) {
+        button.setOnClickListener {
 
-    }
+            val yourspot = "Latitude:" + location.getLatitude()
 
-    override fun onProviderDisabled(provider: String) {
+            if (yourspot.isNotEmpty()) {
+                val MainActivity = Intent(this, MainActivity::class.java)
+
+                MainActivity.putExtra("Latitide", yourspot)
+
+                startActivity(MainActivity)
+
+
+            }
+        }
+
+
+
+
+
+
 
     }
 
