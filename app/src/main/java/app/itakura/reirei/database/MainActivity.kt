@@ -20,27 +20,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val memo: Memo? = read()
 
+        saveButton.setOnClickListener {
+
+            val Lat = intent.getDoubleExtra("Latitude", 0.0)
+            val Long = intent.getDoubleExtra("Longitude", 0.0)
+
+            val title = titleEditText.text.toString()
+            val detail = titleEditText.text.toString()
+            save(Lat, Long, title, detail)
+
+            Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
+
+
+
+        }
+
         if (memo != null) {
             titleEditText.setText(memo.title)
             titleEditText.setText(memo.detail)
 
-
-
-
-            saveButton.setOnClickListener {
-
-                val Lat = intent.getDoubleExtra("Latitude", 0.0)
-                val Long = intent.getDoubleExtra("Longitude", 0.0)
-
-                val title = titleEditText.text.toString()
-                val detail = titleEditText.text.toString()
-                save(Lat, Long, title, detail)
-
-                Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
-
-
-
-            }
 
         }
 
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun read(): Memo? {
-        return realm.where(Memo::class.java).findFirst()
+        return realm.where(Memo::class.java).findAll()
     }
 
     fun save(
