@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import app.itakura.reirei.databaserealm.Memo
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_g_p_s.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,12 +36,39 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     private var mylocation: Location? = null
 
+    val realm = Realm.getDefaultInstance()
+
+    fun read(): Memo? {
+        return realm.where(Memo::class.java).findFirst()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_p_s)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+
+        button.setOnClickListener {
+
+            //val yourspot = "Latitude" + mylocation.getLatitude()
+            //val yourspot1 = "Longitude" + mylocation.getLongitude()
+
+            if (mylocation!=null) {
+                val MainActivity = Intent(this, MainActivity::class.java)
+
+                MainActivity.putExtra("Latitude", mylocation!!.getLatitude())
+                MainActivity.putExtra("Longitude", mylocation!!.getLongitude())
+
+                //LatLng(
+                // location.getLatitude(),location.getLongitude()
+                //)
+
+                startActivity(MainActivity)
+            }
+
+            }
+
+        //val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        //mapFragment.getMapAsync(this)
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -69,21 +98,32 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
             }
 
         }
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
     }
+
+
 
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap
+        val memo: Memo? = read()
+        if (memo!=null){
+            val place = LatLng(
+                memo.Lat, memo.Long)
+            map?.addMarker(MarkerOptions().position(place).title(memo.title))
 
-        val place =LatLng(mylocation?.getLatitude()?:,mylocation?.getLongitude()?:)
 
-        //val tokyo = LatLng(35.689521, 139.691704)
-        map?.addMarker(MarkerOptions().position(place).title("東京"))
 
-        val cameraPosition = CameraPosition.Builder()
-            .zoom(12f)
-            .target(place)
-            .build()
-        map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            //val tokyo = LatLng(35.689521, 139.691704)
+
+            val cameraPosition = CameraPosition.Builder()
+                .zoom(12f)
+                .target(place)
+                .build()
+            map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
     }
 
     private fun locationStart() {
@@ -179,28 +219,13 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     override fun onLocationChanged(location: Location) {
 
+        val yourspot = "Latitude" + location.getLatitude()
+        val yourspot1 = "Longitude" + location.getLongitude()
+
         mylocation = location
 
 
-        button.setOnClickListener {
 
-            val yourspot = "Latitude" + location.getLatitude()
-            val yourspot1 = "Longitude" + location.getLongitude()
-
-            if (yourspot.isNotEmpty()) {
-                val MainActivity = Intent(this, MainActivity::class.java)
-
-                MainActivity.putExtra("Latitude", yourspot)
-                MainActivity.putExtra("Longitude", yourspot1)
-
-                LatLng(
-                    location.getLatitude(),location.getLongitude()
-                )
-
-                startActivity(MainActivity)
-
-
-            }
         }
 
 
@@ -212,5 +237,5 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
     }
 
 
-}
+
 
