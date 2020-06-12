@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener {
 
-            val your = intent.getStringExtra("yourspot")
+            val your = intent.getStringExtra("Latitide")
+            val your1 = intent.getStringExtra("Longitude")
 
             val title = titleEditText.text.toString()
             val detail = detail.text.toString()

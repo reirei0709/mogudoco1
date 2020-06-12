@@ -32,6 +32,8 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     private var map: GoogleMap? = null
 
+    private var mylocation: Location? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_p_s)
@@ -72,12 +74,14 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap
 
-        val tokyo = LatLng(35.689521, 139.691704)
-        map?.addMarker(MarkerOptions().position(tokyo).title("東京"))
+        val place =LatLng(mylocation?.getLatitude()?:,mylocation?.getLongitude()?:)
+
+        //val tokyo = LatLng(35.689521, 139.691704)
+        map?.addMarker(MarkerOptions().position(place).title("東京"))
 
         val cameraPosition = CameraPosition.Builder()
             .zoom(12f)
-            .target(tokyo)
+            .target(place)
             .build()
         map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
@@ -175,15 +179,23 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     override fun onLocationChanged(location: Location) {
 
+        mylocation = location
+
 
         button.setOnClickListener {
 
-            val yourspot = "Latitude:" + location.getLatitude()
+            val yourspot = "Latitude" + location.getLatitude()
+            val yourspot1 = "Longitude" + location.getLongitude()
 
             if (yourspot.isNotEmpty()) {
                 val MainActivity = Intent(this, MainActivity::class.java)
 
-                MainActivity.putExtra("Latitide", yourspot)
+                MainActivity.putExtra("Latitude", yourspot)
+                MainActivity.putExtra("Longitude", yourspot1)
+
+                LatLng(
+                    location.getLatitude(),location.getLongitude()
+                )
 
                 startActivity(MainActivity)
 
