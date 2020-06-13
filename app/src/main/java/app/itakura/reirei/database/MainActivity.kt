@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import app.itakura.reirei.databaserealm.Memo
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -26,14 +27,16 @@ class MainActivity : AppCompatActivity() {
             val Long = intent.getDoubleExtra("Longitude", 0.0)
 
             val title = titleEditText.text.toString()
-            val detail = titleEditText.text.toString()
+            val detail = detail.text.toString()
             save(Lat, Long, title, detail)
 
             Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
 
 
 
+
         }
+
 
         if (memo != null) {
             titleEditText.setText(memo.title)
@@ -42,16 +45,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        fun onDestroy() {
-            super.onDestroy()
-            realm.close()
-        }
 
 
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
+    }
+
 
     fun read(): Memo? {
-        return realm.where(Memo::class.java).findAll()
+        return realm.where(Memo::class.java).findFirst()
+
     }
 
     fun save(
@@ -63,18 +68,18 @@ class MainActivity : AppCompatActivity() {
         val memo: Memo? = read()
 
         realm.executeTransaction {
-            if (memo != null) {
-                memo.Lat = Lat
-                memo.Long = Long
-                memo.title = title
-                memo.detail = detail
-            } else {
-                val newMemo: Memo = it.createObject(Memo::class.java)
-                newMemo.Lat = Lat
-                newMemo.Long = Long
-                newMemo.title = title
-                newMemo.detail = detail
-            }
+            //if (memo != null) {
+                memo?.Lat = Lat
+                memo?.Long = Long
+                memo?.title = title
+                memo?.detail = detail
+            //} else {
+                //val newMemo: Memo = it.createObject(Memo::class.java)
+               // newMemo.Lat = Lat
+                //newMemo.Long = Long
+                //newMemo.title = title
+               // newMemo.detail = detail
+            //}
             //Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
 
 
