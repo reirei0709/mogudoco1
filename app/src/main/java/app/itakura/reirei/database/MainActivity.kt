@@ -1,12 +1,12 @@
 package app.itakura.reirei.database
 
+import android.content.Intent
 import android.os.Bundle
-import android.system.Os.read
 import androidx.appcompat.app.AppCompatActivity
+import app.itakura.reirei.database.GPS
 import app.itakura.reirei.databaserealm.Memo
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
             Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
 
-
-
+            val intent = Intent(application,GPS::class.java)
+            startActivity(intent)
 
         }
 
