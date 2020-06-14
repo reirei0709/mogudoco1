@@ -40,6 +40,7 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
     val realm = Realm.getDefaultInstance()
 
+
     fun read(): Memo? {
         return realm.where(Memo::class.java).findFirst()
     }
@@ -82,6 +83,8 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
             //val yourspot1 = "Longitude" + mylocation.getLongitude()
 
 
+
+
             if (mylocation != null) {
                 val MainActivity = Intent(this, MainActivity::class.java)
 
@@ -106,6 +109,7 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         map = googleMap
         val memo: Memo? = read()
+
 
 
 
@@ -241,6 +245,45 @@ class GPS : AppCompatActivity(), LocationListener,OnMapReadyCallback {
 
 
         }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
+    }
+
+
+
+
+
+
+
+    fun save(
+        Lat: Double,
+        Long: Double,
+        title: String,
+        detail: String
+    ) {
+        val memo: Memo? = read()
+
+        realm.executeTransaction {
+            //if (memo != null) {
+            //memo?.Lat = Lat
+            //memo?.Long = Long
+            //memo?.title = title
+            //memo?.detail = detail
+            //} else {
+            val newMemo: Memo = it.createObject(Memo::class.java)
+             newMemo.Lat = Lat
+            newMemo.Long = Long
+            newMemo.title = title
+            newMemo.detail = detail
+            //}
+            //Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
+
+
+        }
+
+    }
 
 
 

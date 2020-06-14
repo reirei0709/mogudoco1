@@ -8,9 +8,12 @@ import android.media.MediaScannerConnection.scanFile
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.itakura.reirei.databaserealm.Memo
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity(), Parcelable {
 
 
     val realm = Realm.getDefaultInstance()
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val memo: Memo? = read()
 
         saveButton.setOnClickListener {
+
 
             val Lat = intent.getDoubleExtra("Latitude", 0.0)
             val Long = intent.getDoubleExtra("Longitude", 0.0)
@@ -48,10 +52,17 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        imageView.setOnClickListener {
+            showGallery()
+        }
+
+
+
+
 
         if (memo != null) {
             titleEditText.setText(memo.title)
-            titleEditText.setText(memo.detail)
+            detail.setText(memo.detail)
 
 
         }
@@ -80,21 +91,19 @@ class MainActivity : AppCompatActivity() {
 
         realm.executeTransaction {
             //if (memo != null) {
-            memo?.Lat = Lat
-            memo?.Long = Long
-            memo?.title = title
-            memo?.detail = detail
+            //memo?.Lat = Lat
+            // memo?.Long = Long
+            //memo?.title = title
+            //memo?.detail = detail
             //} else {
-            //val newMemo: Memo = it.createObject(Memo::class.java)
-            // newMemo.Lat = Lat
-            //newMemo.Long = Long
-            //newMemo.title = title
-            // newMemo.detail = detail
-            //}
-            //Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
-
-
+            val newMemo: Memo = it.createObject(Memo::class.java)
+            newMemo.Lat = Lat
+            newMemo.Long = Long
+            newMemo.title = title
+            newMemo.detail = detail
         }
+        //Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
+
 
     }
 
@@ -102,26 +111,28 @@ class MainActivity : AppCompatActivity() {
     private var m_uri: Uri? = null
     private val REQUEST_CHOOSER = 1000
 
-    //override fun onCreate(savedInstanceState: Bundle?) {
-      //super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
-       // setViews()
-    //}
-
-        // private fun setViews() {
-       // val button: Button = findViewById(R.id.buttonPanel) as Button
-        //button.setOnClickListener(button_onClick)
-    //}
-
-    private val savebutton: Any = object : android.content.DialogInterface.OnClickListener {
-        fun onClick(v: View?) {
-            showGallery()
-        }
-
-        override fun onClick(dialog: android.content.DialogInterface?, which: kotlin.Int) {
-            TODO("Not yet implemented")
-        }
+    constructor(parcel: Parcel) : this() {
+        m_uri = parcel.readParcelable(Uri::class.java.classLoader)
     }
+
+
+//override fun onCreate(savedInstanceState: Bundle?) {
+//super.onCreate(savedInstanceState)
+//setContentView(R.layout.activity_main)
+// setViews()
+//}
+
+// private fun setViews() {
+// val button: Button = findViewById(R.id.buttonPanel) as Button
+//button.setOnClickListener(button_onClick)
+//}
+
+
+
+    fun onClick(dialog: android.content.DialogInterface?, which: kotlin.Int) {
+        TODO("Not yet implemented")
+    }
+
 
     private fun showGallery() {
 
@@ -130,8 +141,7 @@ class MainActivity : AppCompatActivity() {
         val contentValues = ContentValues()
         contentValues.put(MediaStore.Images.Media.TITLE, photoName)
         contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-        m_uri = contentResolver
-            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        m_uri = this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
         val intentCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, m_uri)
 
@@ -178,5 +188,33 @@ class MainActivity : AppCompatActivity() {
             imageView.setImageURI(resultUri)
         }
     }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeParcelable(m_uri, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
