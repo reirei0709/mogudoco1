@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import io.realm.Realm
 import io.realm.RealmObject
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_g_p_s.*
 import kotlinx.android.synthetic.main.activity_main.*
 
