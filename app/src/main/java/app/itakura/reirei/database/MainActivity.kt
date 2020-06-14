@@ -1,6 +1,6 @@
 package app.itakura.reirei.database
 
-import android.R
+
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -16,6 +16,7 @@ import app.itakura.reirei.databaserealm.Memo
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(container, "登録出来ました！！", Snackbar.LENGTH_SHORT).show()
 
             val intent = Intent(application, GPS::class.java)
+
+
             startActivity(intent)
 
         }
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         //button.setOnClickListener(button_onClick)
     //}
 
-    private val savebutton: Any = object : android.content.DialogInterface.OnClickListener() {
+    private val savebutton: Any = object : android.content.DialogInterface.OnClickListener {
         fun onClick(v: View?) {
             showGallery()
         }
