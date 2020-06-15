@@ -52,12 +52,12 @@ class MainActivity() : AppCompatActivity(), Parcelable {
 
         }
 
-        // get reference to ImageView
-        val imageview = findViewById(R.id.imageVIew) as ImageView
+
          // set on-click listener for ImageView
-        imageview.setOnClickListener{ // your code here
+        imageView.setOnClickListener{// your code here
             showGallery()
-        }
+    }
+
 
 
 
@@ -189,7 +189,6 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             )
 
             // 画像を設定
-            val imageView: ImageView = findViewById<ImageView>(R.id.imageVIew)
             imageView.setImageURI(resultUri)
         }
     }
